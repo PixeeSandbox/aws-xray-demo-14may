@@ -46,7 +46,7 @@ public class DockerUtils {
         try {
             this.cgroupLocation = new File(CGROUP_PATH).toURI().toURL();
         } catch (MalformedURLException e) {
-            logger.warn("Failed to read container ID because " + CGROUP_PATH + " does not exist.");
+            logger.warn(FAILED_TO_READ_CONTAINER_ID_BECAUSE + CGROUP_PATH + " does not exist.");
         }
     }
 
@@ -71,7 +71,7 @@ public class DockerUtils {
         try {
             procFile = new File(cgroupLocation.toURI());
         } catch (URISyntaxException e) {
-            logger.warn("Failed to read container ID because " + cgroupLocation.toString() + " didn't contain an ID.");
+            logger.warn(FAILED_TO_READ_CONTAINER_ID_BECAUSE + cgroupLocation.toString() + " didn't contain an ID.");
             return null;
         }
 
@@ -83,7 +83,7 @@ public class DockerUtils {
                     line = reader.readLine();
 
                     if (line == null) {
-                        logger.warn("Failed to read container ID because " + cgroupLocation.toString()
+                        logger.warn(FAILED_TO_READ_CONTAINER_ID_BECAUSE + cgroupLocation.toString()
                                     + " didn't contain an ID.");
                     } else if (line.length() > CONTAINER_ID_LENGTH) {
                         return line.substring(line.length() - CONTAINER_ID_LENGTH);
@@ -91,9 +91,11 @@ public class DockerUtils {
                 } while (line != null);
             }
         } else {
-            logger.warn("Failed to read container ID because " + cgroupLocation.toString() + " does not exist.");
+            logger.warn(FAILED_TO_READ_CONTAINER_ID_BECAUSE + cgroupLocation.toString() + " does not exist.");
         }
 
         return null;
     }
+    
+    private static final String FAILED_TO_READ_CONTAINER_ID_BECAUSE = "Failed to read container ID because ";
 }

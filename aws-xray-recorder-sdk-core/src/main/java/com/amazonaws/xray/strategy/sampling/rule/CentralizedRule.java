@@ -116,18 +116,18 @@ public class CentralizedRule implements Rule, Comparable<CentralizedRule> {
         if (rule.getRuleName() == null || rule.getPriority() == null
                 || rule.getReservoirSize() == null || rule.getFixedRate() == null || rule.getVersion() != 1) {
 
-            logger.error("Detect invalid rule. Please check sampling rule format.");
+            logger.error(DETECT_INVALID_RULE_PLEASE_CHECK_SAMPLING_RULE_FORMAT);
             return false;
         }
 
         if (!rule.getResourceARN().equals("*") || !rule.getAttributes().isEmpty()) {
-            logger.error("Detect invalid rule. Please check sampling rule format.");
+            logger.error(DETECT_INVALID_RULE_PLEASE_CHECK_SAMPLING_RULE_FORMAT);
             return false;
         }
 
         if (rule.getHost() == null || rule.getServiceName() == null || rule.getHTTPMethod() == null ||
             rule.getURLPath() == null || rule.getServiceType() == null) {
-            logger.error("Detect invalid rule. Please check sampling rule format.");
+            logger.error(DETECT_INVALID_RULE_PLEASE_CHECK_SAMPLING_RULE_FORMAT);
             return false;
         }
 
@@ -304,5 +304,7 @@ public class CentralizedRule implements Rule, Comparable<CentralizedRule> {
         result = 31 * result + (matchers != null ? matchers.hashCode() : 0);
         return result;
     }
+    
+    private static final String DETECT_INVALID_RULE_PLEASE_CHECK_SAMPLING_RULE_FORMAT = "Detect invalid rule. Please check sampling rule format.";
 
 }

@@ -238,7 +238,7 @@ public class TracingHandler extends RequestHandler2 {
                         ret.put(TracingHandler.toSnakeCase(parameterName), parameterValue);
                     }
                 } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                    logger.error("Error getting request parameter: " + parameterName, e);
+                    logger.error(ERROR_GETTING_REQUEST_PARAMETER + parameterName, e);
                 }
             });
         }
@@ -269,7 +269,7 @@ public class TracingHandler extends RequestHandler2 {
                         }
                     }
                 } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | ClassCastException e) {
-                    logger.error("Error getting request parameter: " + requestKeyName, e);
+                    logger.error(ERROR_GETTING_REQUEST_PARAMETER + requestKeyName, e);
                 }
             });
         }
@@ -333,7 +333,7 @@ public class TracingHandler extends RequestHandler2 {
                         }
                     }
                 } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | ClassCastException e) {
-                    logger.error("Error getting request parameter: " + responseKeyName, e);
+                    logger.error(ERROR_GETTING_REQUEST_PARAMETER + responseKeyName, e);
                 }
             });
         }
@@ -510,5 +510,7 @@ public class TracingHandler extends RequestHandler2 {
         }
         recorder = AWSXRay.getGlobalRecorder();
     }
+    
+    private static final String ERROR_GETTING_REQUEST_PARAMETER = "Error getting request parameter: ";
 
 }
