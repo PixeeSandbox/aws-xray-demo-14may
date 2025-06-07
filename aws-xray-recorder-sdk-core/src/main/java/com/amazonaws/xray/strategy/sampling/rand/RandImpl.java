@@ -15,6 +15,7 @@
 
 package com.amazonaws.xray.strategy.sampling.rand;
 
+import java.security.SecureRandom;
 import java.util.Random;
 
 public class RandImpl implements Rand {
@@ -22,7 +23,7 @@ public class RandImpl implements Rand {
     private Random rand;
 
     public RandImpl() {
-        this.rand = new Random(System.nanoTime());
+        this.rand = new SecureRandom(System.nanoTime());
     }
 
     @Override
