@@ -330,18 +330,8 @@ class CentralizedManifestTest {
     }
 
     private SamplingRule rule(String ruleName) {
-        SamplingRule r = new SamplingRule()
-            .withRuleName(ruleName)
-            .withPriority(10)
-            .withReservoirSize(20)
-            .withFixedRate(0.05)
-            .withHost("*")
-            .withServiceName("s2")
-            .withHTTPMethod("POST")
-            .withURLPath("/foo")
-            .withResourceARN("arn2");
 
-        return r;
+        return new SamplingRule();
     }
 
 }

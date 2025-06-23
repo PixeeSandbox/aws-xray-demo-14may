@@ -23,8 +23,7 @@ package com.amazonaws.xray.strategy.sampling;
 public class NoSamplingStrategy implements SamplingStrategy {
     @Override
     public SamplingResponse shouldTrace(SamplingRequest samplingRequest) {
-        SamplingResponse sampleResponse = new SamplingResponse(false, "");
-        return sampleResponse;
+        return new SamplingResponse(false, "");
     }
 
     @Override

@@ -283,23 +283,13 @@ public class CentralizedRuleTest {
     }
 
     public static SamplingRule createInput(String name, int priority, int capacity, double rate) {
-        SamplingRule input = new SamplingRule()
-                .withRuleName(name)
-                .withPriority(priority)
-                .withFixedRate(rate)
-                .withReservoirSize(capacity);
 
-        return input;
+        return new SamplingRule();
     }
 
     public static SamplingTargetDocument createTarget(int quota, double rate, long expiresAt) {
-        SamplingTargetDocument target = new SamplingTargetDocument()
-                .withReservoirQuota(quota)
-                .withReservoirQuotaTTL(Date.from(Instant.ofEpochSecond(expiresAt)))
-                .withFixedRate(rate)
-                .withInterval(10);
 
-        return target;
+        return new SamplingTargetDocument();
     }
 
 }
