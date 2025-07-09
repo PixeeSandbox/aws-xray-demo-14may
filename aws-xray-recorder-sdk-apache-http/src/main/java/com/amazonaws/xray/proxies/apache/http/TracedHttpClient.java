@@ -117,10 +117,10 @@ public class TracedHttpClient extends CloseableHttpClient {
 
     @FunctionalInterface
     public interface HttpSupplier<R> { //Necessary to define a get() method that may throw checked exceptions
-        R get() throws IOException, ClientProtocolException;
+        R get() throws IOException;
     }
 
-    private <R> R wrapHttpSupplier(Subsegment subsegment, HttpSupplier<R> supplier) throws IOException, ClientProtocolException {
+    private <R> R wrapHttpSupplier(Subsegment subsegment, HttpSupplier<R> supplier) throws IOException {
         try {
             return supplier.get();
         } catch (Exception e) {
@@ -139,7 +139,7 @@ public class TracedHttpClient extends CloseableHttpClient {
     public CloseableHttpResponse execute(
             final HttpHost target,
             final HttpRequest request,
-            final HttpContext context) throws IOException, ClientProtocolException {
+            final HttpContext context) throws IOException {
         Subsegment subsegment = recorder.beginSubsegment(target.getHostName());
         return wrapHttpSupplier(
             subsegment, () -> {
@@ -153,7 +153,7 @@ public class TracedHttpClient extends CloseableHttpClient {
     @Override
     public CloseableHttpResponse execute(
             final HttpUriRequest request,
-            final HttpContext context) throws IOException, ClientProtocolException {
+            final HttpContext context) throws IOException {
         Subsegment subsegment = recorder.beginSubsegment(determineTarget(request).getHostName());
         return wrapHttpSupplier(
             subsegment, () -> {
@@ -166,7 +166,7 @@ public class TracedHttpClient extends CloseableHttpClient {
 
     @Override
     public CloseableHttpResponse execute(
-            final HttpUriRequest request) throws IOException, ClientProtocolException {
+            final HttpUriRequest request) throws IOException {
         Subsegment subsegment = recorder.beginSubsegment(determineTarget(request).getHostName());
         return wrapHttpSupplier(
             subsegment, () -> {
@@ -180,7 +180,7 @@ public class TracedHttpClient extends CloseableHttpClient {
     @Override
     public CloseableHttpResponse execute(
             final HttpHost target,
-            final HttpRequest request) throws IOException, ClientProtocolException {
+            final HttpRequest request) throws IOException {
         Subsegment subsegment = recorder.beginSubsegment(target.getHostName());
         return wrapHttpSupplier(
             subsegment, () -> {
@@ -193,8 +193,8 @@ public class TracedHttpClient extends CloseableHttpClient {
 
     @Override
     public <T> T execute(final HttpUriRequest request,
-            final ResponseHandler<? extends T> responseHandler) throws IOException,
-            ClientProtocolException {
+            final ResponseHandler<? extends T> responseHandler) throws IOException
+    {
         Subsegment subsegment = recorder.beginSubsegment(determineTarget(request).getHostName());
         return wrapHttpSupplier(subsegment, () -> {
             TracedHttpClient.addRequestInformation(subsegment, request, TracedHttpClient.getUrl(request));
@@ -206,7 +206,7 @@ public class TracedHttpClient extends CloseableHttpClient {
     @Override
     public <T> T execute(final HttpUriRequest request,
             final ResponseHandler<? extends T> responseHandler, final HttpContext context)
-            throws IOException, ClientProtocolException {
+            throws IOException {
         Subsegment subsegment = recorder.beginSubsegment(determineTarget(request).getHostName());
         return wrapHttpSupplier(
             subsegment, () -> {
@@ -218,8 +218,8 @@ public class TracedHttpClient extends CloseableHttpClient {
 
     @Override
     public <T> T execute(final HttpHost target, final HttpRequest request,
-            final ResponseHandler<? extends T> responseHandler) throws IOException,
-            ClientProtocolException {
+            final ResponseHandler<? extends T> responseHandler) throws IOException
+    {
         Subsegment subsegment = recorder.beginSubsegment(target.getHostName());
         return wrapHttpSupplier(
             subsegment, () -> {
@@ -232,7 +232,7 @@ public class TracedHttpClient extends CloseableHttpClient {
     @Override
     public <T> T execute(final HttpHost target, final HttpRequest request,
             final ResponseHandler<? extends T> responseHandler, final HttpContext context)
-            throws IOException, ClientProtocolException {
+            throws IOException {
         Subsegment subsegment = recorder.beginSubsegment(target.getHostName());
         return wrapHttpSupplier(
             subsegment, () -> {
@@ -259,7 +259,7 @@ public class TracedHttpClient extends CloseableHttpClient {
 
     @Override
     protected CloseableHttpResponse doExecute(
-        HttpHost httpHost, HttpRequest httpRequest, HttpContext httpContext) throws IOException, ClientProtocolException {
+        HttpHost httpHost, HttpRequest httpRequest, HttpContext httpContext) throws IOException {
         // gross hack to call the wrappedClient's doExecute...
         // see line 67 of Apache's CloseableHttpClient
         return wrappedClient.execute(httpHost, httpRequest, httpContext);

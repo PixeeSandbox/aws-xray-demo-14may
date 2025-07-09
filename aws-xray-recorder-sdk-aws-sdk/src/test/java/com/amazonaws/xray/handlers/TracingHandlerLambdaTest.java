@@ -51,7 +51,7 @@ public class TracingHandlerLambdaTest {
         "Root=1-57ff426a-80c11c39b0c928905eb0828d;Parent=1234abcd1234abcd;Sampled=1";
 
     @Test
-    public void testSamplingOverrideFalseInLambda() throws Exception {
+    public void testSamplingOverrideFalseInLambda() {
         TraceHeader header = TraceHeader.fromString(TRACE_HEADER);
 
         PowerMockito.stub(PowerMockito.method(

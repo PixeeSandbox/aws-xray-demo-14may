@@ -66,7 +66,7 @@ public class TracedResponseHandler<T> implements ResponseHandler<T> {
     }
 
     @Override
-    public T handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
+    public T handleResponse(HttpResponse response) throws IOException {
         T handled = wrappedHandler.handleResponse(response);
         Subsegment currentSubsegment = AWSXRay.getCurrentSubsegment();
         if (null != currentSubsegment) {

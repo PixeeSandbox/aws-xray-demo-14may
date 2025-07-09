@@ -45,7 +45,7 @@ public class DefaultHttpClient extends org.apache.http.impl.client.DefaultHttpCl
 
     @Override
     public CloseableHttpResponse execute(
-        HttpHost target, HttpRequest request, HttpContext context) throws IOException, ClientProtocolException {
+        HttpHost target, HttpRequest request, HttpContext context) throws IOException {
         Subsegment subsegment = getRecorder().beginSubsegment(target.getHostName());
         try {
             TracedHttpClient.addRequestInformation(subsegment, request, TracedHttpClient.getUrl(target, request));
@@ -62,7 +62,7 @@ public class DefaultHttpClient extends org.apache.http.impl.client.DefaultHttpCl
 
     @Override
     public CloseableHttpResponse execute(
-        HttpUriRequest request, HttpContext context) throws IOException, ClientProtocolException {
+        HttpUriRequest request, HttpContext context) throws IOException {
         Subsegment subsegment = getRecorder().beginSubsegment(TracedHttpClient.determineTarget(request).getHostName());
         try {
             TracedHttpClient.addRequestInformation(subsegment, request, TracedHttpClient.getUrl(request));
@@ -78,7 +78,7 @@ public class DefaultHttpClient extends org.apache.http.impl.client.DefaultHttpCl
     }
 
     @Override
-    public CloseableHttpResponse execute(HttpHost target, HttpRequest request) throws IOException, ClientProtocolException {
+    public CloseableHttpResponse execute(HttpHost target, HttpRequest request) throws IOException {
         Subsegment subsegment = getRecorder().beginSubsegment(target.getHostName());
         try {
             TracedHttpClient.addRequestInformation(subsegment, request, TracedHttpClient.getUrl(target, request));
